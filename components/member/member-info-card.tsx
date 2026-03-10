@@ -1,11 +1,14 @@
 "use client"
 
-import { ChevronRight, User } from "lucide-react"
+import { ChevronRight, User, Gift } from "lucide-react"
 import { Card } from "@/components/ui/card"
 import { memberData } from "@/data/mock-data"
-import { QRCodeSVG } from "qrcode.react"
 
-export function MemberInfoCard() {
+interface MemberInfoCardProps {
+  onPointsClick?: () => void
+}
+
+export function MemberInfoCard({ onPointsClick }: MemberInfoCardProps) {
   const hasExpiringPoints = memberData.expiringPoints > 0 && memberData.expiringDate
 
   return (
@@ -16,32 +19,32 @@ export function MemberInfoCard() {
         </div>
         <div className="flex-1 min-w-0">
           <h2 className="text-lg font-semibold text-foreground">{memberData.name}</h2>
-          <p className="text-2xl font-bold text-accent">{memberData.totalPoints.toLocaleString()} 點</p>
-          {hasExpiringPoints ? (
-            <p className="text-sm text-muted-foreground">
-              {memberData.expiringPoints} 點將於 {memberData.expiringDate} 到期
-            </p>
-          ) : (
-            <p className="text-sm text-muted-foreground">未來 30 天內沒有即將過期的點數</p>
-          )}
-        </div>
-        <ChevronRight className="w-6 h-6 text-muted-foreground flex-shrink-0" />
-      </div>
-
-      <div className="mt-6 flex justify-center">
-        <div className="bg-white p-3 rounded-lg">
-          <QRCodeSVG
-            value={`KIA-MEMBER:${memberData.id}`}
-            size={180}
-            level="M"
-            includeMargin={false}
-          />
+          <p className="text-xs text-muted-foreground">會員編號: {memberData.id}</p>
         </div>
       </div>
 
-      <div className="mt-4 text-center">
-        <p className="text-sm text-muted-foreground">會員編號: {memberData.id}</p>
-      </div>
+      {/* 點數使用入口 */}
+      <button
+        onClick={onPointsClick}
+        className="w-full mt-4 p-4 bg-primary/5 hover:bg-primary/10 rounded-lg transition-colors flex items-center justify-between group"
+      >
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center">
+            <Gift className="w-5 h-5 text-accent" />
+          </div>
+          <div className="text-left">
+            <p className="text-2xl font-bold text-accent">{memberData.totalPoints.toLocaleString()} 點</p>
+            {hasExpiringPoints ? (
+              <p className="text-xs text-muted-foreground">
+                {memberData.expiringPoints} 點將於 {memberData.expiringDate} 到期
+              </p>
+            ) : (
+              <p className="text-xs text-muted-foreground">點擊使用點數折抵</p>
+            )}
+          </div>
+        </div>
+        <ChevronRight className="w-5 h-5 text-muted-foreground group-hover:text-accent transition-colors" />
+      </button>
     </Card>
   )
 }
