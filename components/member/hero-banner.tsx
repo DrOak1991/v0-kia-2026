@@ -6,8 +6,8 @@ export function HeroBanner() {
   return (
     <div className="relative w-full aspect-[16/9] bg-muted">
       <Image
-        src="https://images.unsplash.com/photo-1619767886558-efdc259cde1a?w=800&q=80"
-        alt="Kia EV6"
+        src="/images/kia-hero.jpg"
+        alt="Kia 新車型"
         fill
         className="object-cover"
         priority
