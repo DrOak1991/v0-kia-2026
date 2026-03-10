@@ -1,16 +1,41 @@
-export default function Home() {
+"use client"
+
+import { useState } from "react"
+import { MemberHeader } from "@/components/member/header"
+import { HeroBanner } from "@/components/member/hero-banner"
+import { MemberInfoCard } from "@/components/member/member-info-card"
+import { TabNavigation } from "@/components/member/tab-navigation"
+import { MemberProfile } from "@/components/member/member-profile"
+import { ConsumptionRecords } from "@/components/member/consumption-records"
+import { RecordDetail } from "@/components/member/record-detail"
+import { type ConsumptionRecord } from "@/data/mock-data"
+
+export default function MemberCenterPage() {
+  const [activeTab, setActiveTab] = useState<"profile" | "records">("profile")
+  const [selectedRecord, setSelectedRecord] = useState<ConsumptionRecord | null>(null)
+
+  // Show record detail view
+  if (selectedRecord) {
+    return (
+      <RecordDetail
+        record={selectedRecord}
+        onBack={() => setSelectedRecord(null)}
+      />
+    )
+  }
+
   return (
-    <div className="flex min-h-screen items-center justify-center font-sans">
-      <main className="flex w-full max-w-3xl flex-col items-center gap-8 px-6 py-16 text-center sm:items-start sm:text-left">
-        <div className="flex flex-col gap-4">
-          <h1 className="text-4xl font-bold tracking-tight">
-            v0-Kia-2026
-          </h1>
-          <p className="max-w-md text-lg text-muted-foreground">
-            To get started, send a prompt or modify this page directly.
-          </p>
-        </div>
-      </main>
+    <div className="min-h-screen bg-background pb-8">
+      <MemberHeader />
+      <HeroBanner />
+      <MemberInfoCard />
+      <TabNavigation activeTab={activeTab} onTabChange={setActiveTab} />
+      
+      {activeTab === "profile" ? (
+        <MemberProfile />
+      ) : (
+        <ConsumptionRecords onSelectRecord={setSelectedRecord} />
+      )}
     </div>
-  );
+  )
 }
