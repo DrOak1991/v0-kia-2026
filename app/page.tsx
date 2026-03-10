@@ -7,14 +7,20 @@ import { MemberInfoCard } from "@/components/member/member-info-card"
 import { SectionHeader } from "@/components/member/tab-navigation"
 import { ConsumptionRecords } from "@/components/member/consumption-records"
 import { RecordDetail } from "@/components/member/record-detail"
+import { PointsRedemption } from "@/components/member/points-redemption"
 import { type ConsumptionRecord } from "@/data/mock-data"
 
 export default function MemberCenterPage() {
   const [selectedRecord, setSelectedRecord] = useState<ConsumptionRecord | null>(null)
+  const [showPointsRedemption, setShowPointsRedemption] = useState(false)
 
   const handlePointsClick = () => {
-    // TODO: 點數使用核銷流程入口
-    console.log("[v0] Points redemption clicked")
+    setShowPointsRedemption(true)
+  }
+
+  // Show points redemption flow
+  if (showPointsRedemption) {
+    return <PointsRedemption onClose={() => setShowPointsRedemption(false)} />
   }
 
   // Show record detail view
