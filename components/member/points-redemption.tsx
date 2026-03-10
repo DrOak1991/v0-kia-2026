@@ -342,11 +342,26 @@ export function PointsRedemption({ onClose }: PointsRedemptionProps) {
               <AlertTriangle className="w-6 h-6 text-amber-600" />
             </div>
             <AlertDialogTitle className="text-center">確認扣除點數</AlertDialogTitle>
-            <AlertDialogDescription className="text-center">
-              即將扣除 <span className="font-bold text-accent">{pointsToRedeem.toLocaleString()} 點</span>，折抵金額 NT$ {pointsToRedeem.toLocaleString()}。
-              <br />
-              <br />
-              點數扣除後無法復原，請確認無誤後再進行。
+            <AlertDialogDescription asChild>
+              <div className="text-center">
+                <div className="bg-muted/50 rounded-lg p-4 my-4 space-y-2">
+                  <div className="flex justify-between text-sm">
+                    <span className="text-muted-foreground">使用點數</span>
+                    <span className="font-bold text-accent">{pointsToRedeem.toLocaleString()} 點</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-muted-foreground">折抵金額</span>
+                    <span className="font-semibold text-foreground">NT$ {pointsToRedeem.toLocaleString()}</span>
+                  </div>
+                  <div className="border-t border-border pt-2 flex justify-between text-sm">
+                    <span className="text-muted-foreground">服務據點</span>
+                    <span className="font-semibold text-foreground">{merchantCode}</span>
+                  </div>
+                </div>
+                <p className="text-sm text-muted-foreground">
+                  點數扣除後無法復原，請確認無誤後再進行。
+                </p>
+              </div>
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter className="flex-col gap-2 sm:flex-col">
